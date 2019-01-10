@@ -9,6 +9,14 @@ public class UserEntity implements Serializable {
     String username;
     String password;
 
+    public UserEntity(){}
+    public UserEntity(int id, String username, String password) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+    }
+
+
     public int getId() {
         return id;
     }
