@@ -25,29 +25,36 @@ import java.io.InputStream;
 public class UserController {
     @Resource
     private UserService userService;
-    Logger logger= LoggerFactory.getLogger(UserController.class);
-    @RequestMapping(value = "getUser",method = RequestMethod.GET)
+    Logger logger = LoggerFactory.getLogger(UserController.class);
+
+    @RequestMapping(value = "getUser", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<Object> getUser(@RequestParam("username")String username){
-        logger.info("username="+username);
-        System.out.println("request");
-        UserEntity user = userService.getUser(username);
+    public ResponseEntity<Object> getUser(@RequestParam("username") String username) {
+        UserEntity user = new UserEntity();
+        try {
+            logger.info("username=" + username);
+            System.out.println("request");
+            user = userService.getUser(username);
+        } catch (Exception e) {
+            logger.error("get_user_error",e);
+        }
+
         return new ResponseEntity<Object>(user, HttpStatus.OK);
 
     }
 
     @RequestMapping("getFile")
 //    @ResponseBody
-    public String  getFile(){
-        File file=new File("/Users/momo/Desktop/test.docx");
+    public String getFile() {
+        File file = new File("/Users/momo/Desktop/test.docx");
         System.out.println(file.getPath());
-        return "redirect:/"+file.getPath();
+        return "redirect:/" + file.getPath();
 
     }
 
-    @RequestMapping(value = "test",method = RequestMethod.GET)
+    @RequestMapping(value = "test", method = RequestMethod.GET)
     @ResponseBody
-    public String test(){
+    public String test() {
         System.out.println("request");
         return "test";
 
